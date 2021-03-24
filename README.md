@@ -6,3 +6,5 @@ The OrbitDB created by this library contains a special access control code. Anyo
 
 # Licence
 [MIT](LICENSE.md)
+
+test
