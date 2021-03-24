@@ -1,7 +1,7 @@
 {
-  "name": "@chris.troutner/npm-lib-boilerplate",
+  "name": "pay-to-write-orbitdb",
   "version": "1.0.0",
-  "description": "A boilerplate for creating an npm library with Semantic Release, linting, and tests.",
+  "description": "Create an Orbit database where anyone can write, if they prove they burnt an SLP token.",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
@@ -28,12 +28,12 @@
   "author": "Chris Troutner <chris.troutner@gmail.com>",
   "license": "MIT",
   "apidoc": {
-    "title": "npm-lib-boilerplate",
+    "title": "pay-to-write-orbitdb",
     "url": "localhost:5000"
   },
-  "repository": "christroutner/npm-lib-boilerplate",
+  "repository": "Permissionless-Software-Foundation/pay-to-write-orbitdb",
   "dependencies": {
-    "@psf/bch-js": "^4.8.1",
+    "@psf/bch-js": "^4.17.0",
     "apidoc": "^0.25.0"
   },
   "devDependencies": {
