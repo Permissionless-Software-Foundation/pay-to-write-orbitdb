@@ -14,7 +14,7 @@ const OrbitDB = require('orbit-db')
 
 // Define the pay-to-write access controller.
 const AccessControllers = require('orbit-db-access-controllers')
-const PayToWriteAccessController = require('./pay-to-write-access-controller')
+const PayToWriteAccessController = require('./lib/pay-to-write-access-controller')
 AccessControllers.addAccessController({
   AccessController: PayToWriteAccessController
 })
@@ -40,8 +40,12 @@ class PayToWriteDB {
   // Returns the handle to a key-value store OrbitDB with pay-to-write
   // access control. The key is a BCH TXID that burned tokens, to pay for the
   // write.
-  async createDb () {
+  async createDb (dbName) {
     try {
+      if (!dbName || typeof dbName !== 'string') {
+        throw new Error('dbName must be a string')
+      }
+
       const orbitdb = await OrbitDB.createInstance(this.ipfs, {
         // directory: "./orbitdb/examples/eventlog",
         directory: './orbitdb/dbs/keyvalue',
@@ -56,8 +60,7 @@ class PayToWriteDB {
       }
 
       // Create the key-value store.
-      const DB_NAME = 'keyvalue003'
-      this.db = await orbitdb.keyvalue(DB_NAME, options)
+      this.db = await orbitdb.keyvalue(dbName, options)
 
       // Load data persisted to the hard drive.
       await this.db.load()
