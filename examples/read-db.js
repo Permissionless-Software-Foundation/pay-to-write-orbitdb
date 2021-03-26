@@ -1,10 +1,9 @@
 /*
-  This is an e2e example that loads the database and attempts to write to it.
-  The TXID for the key is checked against the live blockchain.
+  This is an e2e example that loads the database and attempts to read from it.
+  The database is loaded from disk.
 */
 
 // Customize these constants.
-// const TXID = '2093afb8de46f30b43ce7c5fbdf4ab667768edd47937efad7e2c2f12e7fe623d'
 const DB_NAME = 'testdb002'
 
 // Public npm libraries.
