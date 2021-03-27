@@ -5,9 +5,9 @@
 
 // Customize these constants.
 // const TXID = '7429dff697633eb43efbea5d8552cec4911b780bf5eb4bc748fca4eed2cb8faa'
-// const TXID = '55abb1d78519b0f6e916c68799be2402a6773ffd3dabddbff6c02337572f525f'
-const TXID = 'ee1c8562f9cd1833ca3e1d740a40f8cfaed4e7bf2e65be4abde612857ca3f50c'
-const DB_NAME = 'testdb002'
+const TXID = '55abb1d78519b0f6e916c68799be2402a6773ffd3dabddbff6c02337572f525f'
+// const TXID = 'ee1c8562f9cd1833ca3e1d740a40f8cfaed4e7bf2e65be4abde612857ca3f50c'
+const DB_NAME = 'testdb003'
 
 // Public npm libraries.
 const IPFS = require('ipfs')

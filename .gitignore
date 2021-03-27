@@ -62,6 +62,5 @@ docs
 coverage
 database/
 system-user-*.json
-orbitdb/
 
 !README.md
