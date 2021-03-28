@@ -87,8 +87,11 @@ class PTWDBController {
 
   readAll (ctx) {
     try {
+      const allData = _this.db.all
+
       ctx.body = {
-        success: true
+        success: true,
+        data: allData
       }
     } catch (err) {
       ctx.throw(422, err.message)
