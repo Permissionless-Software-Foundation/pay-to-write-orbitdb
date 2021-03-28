@@ -39,15 +39,37 @@ class PTWDBController {
     }
   }
 
-  writeToDb (ctx) {
-    ctx.body = {
-      success: true
+  /*
+   * @apiExample Example usage:
+   * curl -H "Content-Type: application/json" -X POST -d '{ "user": { "email": "email@format.com", "password": "secretpasas" } }' localhost:5001/users
+   */
+  async writeToDb (ctx) {
+    try {
+      const key = ctx.request.body.txid
+
+      const rndValue = Math.floor(Math.random() * 1000000)
+
+      console.log(`Adding key: ${key}, with value: ${rndValue}`)
+
+      const hash = await _this.db.put(key, rndValue)
+      console.log('hash: ', hash)
+
+      ctx.body = {
+        success: true
+      }
+    } catch (err) {
+      console.error(err)
+      ctx.throw(422, err.message)
     }
   }
 
   readAll (ctx) {
-    ctx.body = {
-      success: true
+    try {
+      ctx.body = {
+        success: true
+      }
+    } catch (err) {
+      ctx.throw(422, err.message)
     }
   }
 }
