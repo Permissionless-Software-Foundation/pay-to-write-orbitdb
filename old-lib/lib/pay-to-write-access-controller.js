@@ -71,7 +71,7 @@ class PayToWriteAccessController extends AccessController {
 
   // Returns the type of the access controller
   static get type () {
-    return 'othertype'
+    return 'payToWrite'
   }
 
   // Returns the address of the OrbitDB used as the AC

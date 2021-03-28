@@ -4,7 +4,7 @@
 */
 
 // Customize these constants.
-const DB_NAME = 'testdb002'
+const DB_NAME = 'testdb003'
 
 // Public npm libraries.
 const IPFS = require('ipfs')
