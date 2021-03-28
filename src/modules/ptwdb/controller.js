@@ -47,12 +47,34 @@ class PTWDBController {
     try {
       const key = ctx.request.body.txid
 
+      // Check to see if the TXID already exists in the MongoDB.
+      const mongoRes = await _this.KeyValue.find({ key })
+      if (mongoRes.length > 0) {
+        // console.log(`mongoRes: `, mongoRes)
+        const mongoKey = mongoRes[0].key
+
+        if (mongoKey === key) {
+          // Entry is already in the database.
+          throw new Error('Entry already in database')
+        }
+      }
+
       const rndValue = Math.floor(Math.random() * 1000000)
 
       console.log(`Adding key: ${key}, with value: ${rndValue}`)
 
+      // Add the entry to the Oribit DB
       const hash = await _this.db.put(key, rndValue)
       console.log('hash: ', hash)
+
+      // Add the entry to the MongoDB if it passed the OrbitDB checks.
+      const kvObj = {
+        hash,
+        key,
+        value: rndValue
+      }
+      const keyValue = new _this.KeyValue(kvObj)
+      await keyValue.save()
 
       ctx.body = {
         success: true
