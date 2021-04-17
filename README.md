@@ -17,7 +17,7 @@ The following improvements need to be made to this code base:
 - Add unit tests
 - Port code to an [ipfs-service-provider](https://github.com/Permissionless-Software-Foundation/ipfs-service-provider), and recreate the same REST API functionality with the JSON RPC.
 - Add API calls for basic wallet functionality over both REST API and JSON RPC.
-- Fork [gatsby-ipfs-web-wallet](https://github.com/Permissionless-Software-Foundation/gatsby-ipfs-web-wallet) that can work off the REST or JSON RPC functionality of the server.
+- Fork [gatsby-ipfs-web-wallet](https://github.com/Permissionless-Software-Foundation/gatsby-ipfs-web-wallet) and modify so that it can work off the REST API or IPFS JSON RPC functionality of the server.
   - Package the front end and back end in the same repository.
 
 # Licence
