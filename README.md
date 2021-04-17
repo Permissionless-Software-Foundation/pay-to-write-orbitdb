@@ -8,9 +8,14 @@ The reason it was converted was because the OrbitDB tries to validate each entry
 
 - [./old-lib/examples](./old-lib/examples) has some example scripts from the old library.
 
-## Examples
+## Next Steps
 
-- Read the README in the [Examples directory](./examples/README.md).
+The following improvements need to be made to this code base:
+
+- Create `_validateSignature()` function in TODO in [pay-to-write-access-controller.js](./src/lib/orbitdb/pay-to-write-access-controller.js).
+- Capture signature in `writeToDb()` in API controller.
+- Add unit tests
+- Port code to an [ipfs-service-provider](https://github.com/Permissionless-Software-Foundation/ipfs-service-provider), an recreate the same REST API functionality with the JSON RPC.
 
 # Licence
 [MIT](LICENSE.md)

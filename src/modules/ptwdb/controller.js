@@ -47,6 +47,9 @@ class PTWDBController {
     try {
       const key = ctx.request.body.txid
 
+      // TODO Include signature
+      // const sig = ctx.request.body.signature
+
       // Check to see if the TXID already exists in the MongoDB.
       const mongoRes = await _this.KeyValue.find({ key })
       if (mongoRes.length > 0) {
