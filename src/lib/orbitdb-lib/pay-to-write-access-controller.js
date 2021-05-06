@@ -91,6 +91,8 @@ class PayToWriteAccessController extends AccessController {
       let validTx = false
 
       const txid = entry.payload.key
+      const message = entry.payload.message
+      const signature = entry.payload.signature
 
       const mongoRes = await this.KeyValue.find({ key: txid })
       if (mongoRes.length > 0) {
@@ -109,6 +111,8 @@ class PayToWriteAccessController extends AccessController {
       // second output of the TX. That's the first reciever of the SLP TX.
       // That allows this function to use a simple call to the full node, and
       // does not require SLP-hydrated UTXOs.
+      const validSignature = _this._validateSignature(txid, signature, message)
+      if (!validSignature) return false
 
       // Validate the transaction matches the burning rules.
       validTx = await this._validateTx(txid)
@@ -254,6 +258,34 @@ class PayToWriteAccessController extends AccessController {
   /* Private methods */
   _onUpdate () {
     this.emit('updated')
+  }
+
+  async _validateSignature (txid, signature, message) {
+    try {
+      if (!txid || typeof txid !== 'string') {
+        throw new Error('txid must be a string')
+      }
+      if (!signature || typeof signature !== 'string') {
+        throw new Error('signature must be a string')
+      }
+      if (!message || typeof message !== 'string') {
+        throw new Error('message must be a string')
+      }
+      const tx = await _this.bchjs.RawTransactions.getRawTransaction(txid, true)
+
+      const addresses = tx.vout[1].scriptPubKey.addresses
+      const address = addresses[0]
+
+      const isValid = this.bchjs.BitcoinCash.verifyMessage(
+        address,
+        signature,
+        message
+      )
+      return isValid
+    } catch (err) {
+      console.error('Error in _validateSignature ')
+      throw err
+    }
   }
 }
 
