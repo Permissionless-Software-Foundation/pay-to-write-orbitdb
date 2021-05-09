@@ -1,7 +1,7 @@
 const KeyValue = require('../../models/key-value')
 
 const IPFS = require('ipfs')
-const PayToWriteDB = require('../../lib/orbitdb/pay-to-write')
+const PayToWriteDB = require('../../lib/orbitdb-lib/pay-to-write')
 
 const config = require('../../../config')
 

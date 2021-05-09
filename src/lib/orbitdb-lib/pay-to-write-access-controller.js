@@ -91,7 +91,10 @@ class PayToWriteAccessController extends AccessController {
       let validTx = false
 
       const txid = entry.payload.key
+      const message = entry.payload.message
+      const signature = entry.payload.signature
 
+      // Fast validation: validate the TXID if it already exists in MongoDB.
       const mongoRes = await this.KeyValue.find({ key: txid })
       if (mongoRes.length > 0) {
         console.log('mongoRes: ', mongoRes)
@@ -103,12 +106,14 @@ class PayToWriteAccessController extends AccessController {
         }
       }
 
-      // TODO: Validate the signature of the address used for the input to the tx.
-      // validSignature = await this._validateSignature(txid, signature)
-      // Note: Don't need an address, as you can use the address from the
-      // second output of the TX. That's the first reciever of the SLP TX.
-      // That allows this function to use a simple call to the full node, and
-      // does not require SLP-hydrated UTXOs.
+      // Validate the signature to ensure the user submitting data owns
+      // the address that did the token burn.
+      // This prevents 'front running' corner case.
+      const validSignature = _this._validateSignature(txid, signature, message)
+      if (!validSignature) {
+        console.log(`Signature for TXID ${txid} is not valid. Rejecting entry.`)
+        return false
+      }
 
       // Validate the transaction matches the burning rules.
       validTx = await this._validateTx(txid)
@@ -254,6 +259,44 @@ class PayToWriteAccessController extends AccessController {
   /* Private methods */
   _onUpdate () {
     this.emit('updated')
+  }
+
+  // Validate a signed messages, to ensure the signer of the message is the owner
+  // of the second output of the TX. This ensures the same user who burned the
+  // tokens is the same user submitting the new DB entry. It prevents
+  // 'front running', or malicous users watching the network for valid burn
+  // TXs then using them to submit their own data to the DB.
+  async _validateSignature (txid, signature, message) {
+    try {
+      // Input validation
+      if (!txid || typeof txid !== 'string') {
+        throw new Error('txid must be a string')
+      }
+      if (!signature || typeof signature !== 'string') {
+        throw new Error('signature must be a string')
+      }
+      if (!message || typeof message !== 'string') {
+        throw new Error('message must be a string')
+      }
+
+      const tx = await _this.bchjs.RawTransactions.getRawTransaction(txid, true)
+
+      // Get the address for the second output of the TX.
+      const addresses = tx.vout[1].scriptPubKey.addresses
+      const address = addresses[0]
+
+      // Verify the signed message is owned by the address.
+      const isValid = this.bchjs.BitcoinCash.verifyMessage(
+        address,
+        signature,
+        message
+      )
+
+      return isValid
+    } catch (err) {
+      console.error('Error in _validateSignature ')
+      throw err
+    }
   }
 }
 
