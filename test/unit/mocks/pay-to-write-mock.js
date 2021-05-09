@@ -18,7 +18,8 @@ const tx = {
       value: 0.00002,
       n: 1,
       scriptPubKey: {
-        asm: 'OP_DUP OP_HASH160 203b64bfbaa9e58333295b621159ddebc591ecb1 OP_EQUALVERIFY OP_CHECKSIG',
+        asm:
+          'OP_DUP OP_HASH160 203b64bfbaa9e58333295b621159ddebc591ecb1 OP_EQUALVERIFY OP_CHECKSIG',
         hex: '76a914203b64bfbaa9e58333295b621159ddebc591ecb188ac',
         reqSigs: 1,
         type: 'pubkeyhash',
@@ -28,6 +29,7 @@ const tx = {
     { value: 0.00008527, n: 2, scriptPubKey: {} }
   ]
 }
+
 module.exports = {
   tx
 }
