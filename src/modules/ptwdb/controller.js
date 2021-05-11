@@ -46,6 +46,18 @@ class PTWDBController {
   async writeToDb (ctx) {
     try {
       const key = ctx.request.body.txid
+      const signature = ctx.request.body.signature
+      const message = ctx.request.body.message
+
+      if(!key || typeof key !== 'string'){
+        throw new Error('key must be a string')
+      }
+      if(!signature || typeof signature !== 'string'){
+        throw new Error('signature must be a string')
+      }
+      if(!message || typeof message !== 'string'){
+        throw new Error('message must be a string')
+      }
 
       // TODO Include signature
       // const sig = ctx.request.body.signature
@@ -61,20 +73,24 @@ class PTWDBController {
           throw new Error('Entry already in database')
         }
       }
-
-      const rndValue = Math.floor(Math.random() * 1000000)
-
-      console.log(`Adding key: ${key}, with value: ${rndValue}`)
+      
+      // key value
+      const dbKeyValue = {
+        signature,
+        message
+      }
+   
+      console.log(`Adding key: ${key}, with value: ${dbKeyValue}`)
 
       // Add the entry to the Oribit DB
-      const hash = await _this.db.put(key, rndValue)
+      const hash = await _this.db.put(key, dbKeyValue)
       console.log('hash: ', hash)
 
       // Add the entry to the MongoDB if it passed the OrbitDB checks.
       const kvObj = {
         hash,
         key,
-        value: rndValue
+        value: dbKeyValue
       }
       const keyValue = new _this.KeyValue(kvObj)
       await keyValue.save()
