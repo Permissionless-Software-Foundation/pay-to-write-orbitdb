@@ -91,8 +91,8 @@ class PayToWriteAccessController extends AccessController {
       let validTx = false
 
       const txid = entry.payload.key
-      const message = entry.payload.message
-      const signature = entry.payload.signature
+      const message = entry.payload.value.message
+      const signature = entry.payload.value.signature
 
       // Fast validation: validate the TXID if it already exists in MongoDB.
       const mongoRes = await this.KeyValue.find({ key: txid })
@@ -109,7 +109,8 @@ class PayToWriteAccessController extends AccessController {
       // Validate the signature to ensure the user submitting data owns
       // the address that did the token burn.
       // This prevents 'front running' corner case.
-      const validSignature = _this._validateSignature(txid, signature, message)
+      const validSignature = await _this._validateSignature(txid, signature, message)
+      console.log('is valid signature', validSignature)
       if (!validSignature) {
         console.log(`Signature for TXID ${txid} is not valid. Rejecting entry.`)
         return false

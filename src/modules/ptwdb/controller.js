@@ -49,13 +49,13 @@ class PTWDBController {
       const signature = ctx.request.body.signature
       const message = ctx.request.body.message
 
-      if(!key || typeof key !== 'string'){
-        throw new Error('key must be a string')
+      if (!key || typeof key !== 'string') {
+        throw new Error('txid must be a string')
       }
-      if(!signature || typeof signature !== 'string'){
+      if (!signature || typeof signature !== 'string') {
         throw new Error('signature must be a string')
       }
-      if(!message || typeof message !== 'string'){
+      if (!message || typeof message !== 'string') {
         throw new Error('message must be a string')
       }
 
@@ -73,13 +73,13 @@ class PTWDBController {
           throw new Error('Entry already in database')
         }
       }
-      
+
       // key value
       const dbKeyValue = {
         signature,
         message
       }
-   
+
       console.log(`Adding key: ${key}, with value: ${dbKeyValue}`)
 
       // Add the entry to the Oribit DB
