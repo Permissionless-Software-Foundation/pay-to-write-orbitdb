@@ -7,6 +7,19 @@ const sinon = require('sinon')
 const LOCALHOST = `http://localhost:${config.port}`
 const PTWLIB = require('../../src/modules/ptwdb/controller')
 const mockContext = require('./mocks/ctx-mock').context
+const KeyValue = require('../../src/models/key-value')
+const context = {}
+
+// Remove test key from the db
+const deleteKey = async () => {
+  try {
+    const keyValue = await KeyValue.find({ key: context.key })
+    await keyValue[0].remove()
+  } catch (error) {
+    console.log(error)
+    throw error
+  }
+}
 
 let uut
 let sandbox
@@ -18,6 +31,9 @@ describe('#Pay-To-Write', () => {
       put: () => { }
     }
     sandbox = sinon.createSandbox()
+  })
+  after(async () => {
+    await deleteKey()
   })
   describe('#writeToDb', () => {
     it('should throw error if txid is not provided', async () => {
@@ -88,6 +104,7 @@ describe('#Pay-To-Write', () => {
         }
         await uut.writeToDb(ctx)
         assert.isTrue(ctx.body.success)
+        context.key = ctx.request.body.txid
       } catch (err) {
         console.log(err)
         assert.fail('unexpected error')
