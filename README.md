@@ -2,6 +2,8 @@
 
 This repository is a prototype for a pay-to-write (P2W) peer-to-peer (p2p) database (DB). It's based on [OrbitDB](https://github.com/orbitdb/orbit-db), which is a p2p database that runs on top of [IPFS](https://ipfs.io). The 'access controller' has been modified so that anyone can write to the database, so long as they submit 'proof-of-burn'. That is a TXID of a transaction on the Bitcoin Cash (BCH) blockchain, proving that a specific SLP token was burned. That burn is the ticket required to write to the database.
 
+Additional background information can be found on [Trout's blog](https://troutsblog.com/blog/).
+
 This started as an npm library and then grew into a Koa REST API server.
 The reason it was converted was because the OrbitDB tries to validate each entry in the database on each startup of the software. The Mongo database is leveraged so that OrbitDB can quickly validate entries that it has already validated. So there are two code paths to validating datbase entries:
 
