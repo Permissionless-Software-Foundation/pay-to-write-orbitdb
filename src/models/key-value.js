@@ -11,7 +11,7 @@ const mongoose = require('mongoose')
 const KeyValue = new mongoose.Schema({
   hash: { type: String },
   key: { type: String }, // BCH TXID
-  value: { type: String }
+  value: { type: Object }
 })
 
 // export default mongoose.model('user', User)

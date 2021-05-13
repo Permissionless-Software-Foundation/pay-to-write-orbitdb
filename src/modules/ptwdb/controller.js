@@ -41,11 +41,23 @@ class PTWDBController {
 
   /*
    * @apiExample Example usage:
-   * curl -H "Content-Type: application/json" -X POST -d '{ "user": { "email": "email@format.com", "password": "secretpasas" } }' localhost:5001/users
+   * curl -H "Content-Type: application/json" -X POST -d '{ "txid": "7b9dff68e9a3d6f2482bcf6186b5387a7014a4edc469f37882629f4b3e4af949", "message": "test", "signature": "H+KlUnu+Eg6599g0S+pb1VHCLb6+ga9K05U+3T5dSu0qAR0I6DeoUe8LRyO+td4f5OhBIK8iFFcDoRsmEt/VfLw=" }' localhost:5001/ptwdb
    */
   async writeToDb (ctx) {
     try {
       const key = ctx.request.body.txid
+      const signature = ctx.request.body.signature
+      const message = ctx.request.body.message
+
+      if (!key || typeof key !== 'string') {
+        throw new Error('txid must be a string')
+      }
+      if (!signature || typeof signature !== 'string') {
+        throw new Error('signature must be a string')
+      }
+      if (!message || typeof message !== 'string') {
+        throw new Error('message must be a string')
+      }
 
       // TODO Include signature
       // const sig = ctx.request.body.signature
@@ -62,19 +74,25 @@ class PTWDBController {
         }
       }
 
-      const rndValue = Math.floor(Math.random() * 1000000)
+      // key value
+      const dbKeyValue = {
+        signature,
+        message
+      }
 
-      console.log(`Adding key: ${key}, with value: ${rndValue}`)
+      console.log(
+        `Adding key: ${key}, with value: ${JSON.stringify(dbKeyValue, null, 2)}`
+      )
 
       // Add the entry to the Oribit DB
-      const hash = await _this.db.put(key, rndValue)
+      const hash = await _this.db.put(key, dbKeyValue)
       console.log('hash: ', hash)
 
       // Add the entry to the MongoDB if it passed the OrbitDB checks.
       const kvObj = {
         hash,
         key,
-        value: rndValue
+        value: dbKeyValue
       }
       const keyValue = new _this.KeyValue(kvObj)
       await keyValue.save()
