@@ -41,7 +41,7 @@ class PTWDBController {
 
   /*
    * @apiExample Example usage:
-   * curl -H "Content-Type: application/json" -X POST -d '{ "user": { "email": "email@format.com", "password": "secretpasas" } }' localhost:5001/users
+   * curl -H "Content-Type: application/json" -X POST -d '{ "txid": "7b9dff68e9a3d6f2482bcf6186b5387a7014a4edc469f37882629f4b3e4af949", "message": "test", "signature": "H+KlUnu+Eg6599g0S+pb1VHCLb6+ga9K05U+3T5dSu0qAR0I6DeoUe8LRyO+td4f5OhBIK8iFFcDoRsmEt/VfLw=" }' localhost:5001/ptwdb
    */
   async writeToDb (ctx) {
     try {
@@ -80,7 +80,9 @@ class PTWDBController {
         message
       }
 
-      console.log(`Adding key: ${key}, with value: ${dbKeyValue}`)
+      console.log(
+        `Adding key: ${key}, with value: ${JSON.stringify(dbKeyValue, null, 2)}`
+      )
 
       // Add the entry to the Oribit DB
       const hash = await _this.db.put(key, dbKeyValue)

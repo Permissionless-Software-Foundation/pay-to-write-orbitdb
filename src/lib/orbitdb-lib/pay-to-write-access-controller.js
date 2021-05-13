@@ -109,8 +109,12 @@ class PayToWriteAccessController extends AccessController {
       // Validate the signature to ensure the user submitting data owns
       // the address that did the token burn.
       // This prevents 'front running' corner case.
-      const validSignature = await _this._validateSignature(txid, signature, message)
-      console.log('is valid signature', validSignature)
+      const validSignature = await _this._validateSignature(
+        txid,
+        signature,
+        message
+      )
+      console.log('Is valid signature: ', validSignature)
       if (!validSignature) {
         console.log(`Signature for TXID ${txid} is not valid. Rejecting entry.`)
         return false
@@ -285,6 +289,10 @@ class PayToWriteAccessController extends AccessController {
       // Get the address for the second output of the TX.
       const addresses = tx.vout[1].scriptPubKey.addresses
       const address = addresses[0]
+
+      console.log(`address: ${address}`)
+      console.log(`signature: ${signature}`)
+      console.log(`message: ${message}`)
 
       // Verify the signed message is owned by the address.
       const isValid = this.bchjs.BitcoinCash.verifyMessage(
