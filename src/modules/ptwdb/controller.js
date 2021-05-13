@@ -41,7 +41,7 @@ class PTWDBController {
 
   /*
    * @apiExample Example usage:
-   * curl -H "Content-Type: application/json" -X POST -d '{ "txid": "7b9dff68e9a3d6f2482bcf6186b5387a7014a4edc469f37882629f4b3e4af949", "message": "test", "signature": "H+KlUnu+Eg6599g0S+pb1VHCLb6+ga9K05U+3T5dSu0qAR0I6DeoUe8LRyO+td4f5OhBIK8iFFcDoRsmEt/VfLw=" }' localhost:5001/ptwdb
+   * curl -H "Content-Type: application/json" -X POST -d '{ "txid": "038b63aa3b1fc8d6ca6043ce577410e8d0bdd9189a3f07d4e0d8f32274e1ddc0", "message": "test", "signature": "H+KlUnu+Eg6599g0S+pb1VHCLb6+ga9K05U+3T5dSu0qAR0I6DeoUe8LRyO+td4f5OhBIK8iFFcDoRsmEt/VfLw=" }' localhost:5001/ptwdb
    */
   async writeToDb (ctx) {
     try {
@@ -58,9 +58,6 @@ class PTWDBController {
       if (!message || typeof message !== 'string') {
         throw new Error('message must be a string')
       }
-
-      // TODO Include signature
-      // const sig = ctx.request.body.signature
 
       // Check to see if the TXID already exists in the MongoDB.
       const mongoRes = await _this.KeyValue.find({ key })
