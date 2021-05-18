@@ -4,13 +4,13 @@
 
 const assert = require('chai').assert
 
-const PayToWriteAccessController = require('../../src/lib/orbitdb-lib/pay-to-write-access-controller')
+const PayToWriteAccessController = require('../../../src/lib/orbitdb-lib/pay-to-write-access-controller')
 
 const sinon = require('sinon')
 
 const util = require('util')
 util.inspect.defaultOptions = { depth: 1 }
-const mock = require('./mocks/pay-to-write-mock')
+const mock = require('../mocks/pay-to-write-mock')
 
 let sandbox
 let uut

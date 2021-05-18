@@ -1,13 +1,13 @@
 
 const axios = require('axios')
 const assert = require('chai').assert
-const config = require('../../config')
+const config = require('../../../config')
 const sinon = require('sinon')
 
 const LOCALHOST = `http://localhost:${config.port}`
-const PTWLIB = require('../../src/modules/ptwdb/controller')
-const mockContext = require('./mocks/ctx-mock').context
-const KeyValue = require('../../src/models/key-value')
+const PTWLIB = require('../../../src/modules/ptwdb/controller')
+const mockContext = require('../../unit/mocks/ctx-mock').context
+const KeyValue = require('../../../src/models/key-value')
 const context = {}
 
 // Remove test key from the db

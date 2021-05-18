@@ -9,6 +9,5 @@ module.exports = {
   emailServer: process.env.EMAILSERVER ? process.env.EMAILSERVER : 'mail.someserver.com',
   emailUser: process.env.EMAILUSER ? process.env.EMAILUSER : 'noreply@someserver.com',
   emailPassword: process.env.EMAILPASS ? process.env.EMAILPASS : 'emailpassword',
-
   orbitDbName: 'testdb006'
 }
