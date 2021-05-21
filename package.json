@@ -1,7 +1,7 @@
 {
-  "name": "koa-api-boilerplate",
+  "name": "pay-to-write-orbitdb",
   "version": "3.0.0",
-  "description": "Koa2 boilerplate covering essentials for REST API and auth.",
+  "description": "Create an Orbit database where anyone can write, if they prove they burnt an SLP token.",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
