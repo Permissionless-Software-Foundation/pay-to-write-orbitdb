@@ -1,5 +1,7 @@
 # pay-to-write-orbitdb
 
+**This repository is deprecated. Research and innovation are continuing in the [ipfs-p2wdb-service](https://github.com/Permissionless-Software-Foundation/ipfs-p2wdb-service)**
+
 This repository is a prototype for a pay-to-write (P2W) peer-to-peer (p2p) database (DB). It's based on [OrbitDB](https://github.com/orbitdb/orbit-db), which is a p2p database that runs on top of [IPFS](https://ipfs.io). The 'access controller' has been modified so that anyone can write to the database, so long as they submit 'proof-of-burn'. That is a TXID of a transaction on the Bitcoin Cash (BCH) blockchain, proving that a specific SLP token was burned. That burn is the ticket required to write to the database.
 
 Additional background information can be found on [Trout's blog](https://troutsblog.com/blog/).
